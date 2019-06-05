@@ -32,10 +32,12 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
         print("Presentation does not exist, nothing downloaded, continuing.")
         continue
     # Get title
-    title = content.html.find('span.j-title-breadcrumb', first=True).text
-    if title is None:
+    title_element = content.html.find('span.j-title-breadcrumb', first=True)
+    if title_element.text is None:
         print("Title not found, nothing downloaded, continuing.")
         continue
+    else:
+        title = title_element.text
     print(f'Downloading \"{title}\"...')
     # Get image index and download link
     slides = [(int(s.attrs['data-index']), s.find('img.slide_image', first=True).attrs['data-full']) for s in content.html.find('section.slide')]
