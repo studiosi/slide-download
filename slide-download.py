@@ -33,7 +33,7 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
         continue
     # Get title
     title_element = content.html.find('span.j-title-breadcrumb', first=True)
-    if title_element.text is None:
+    if title_element is None or title_element.text is None:
         print("Title not found, nothing downloaded, continuing.")
         continue
     else:
