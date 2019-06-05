@@ -33,6 +33,9 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
         continue
     # Get title
     title = content.html.find('span.j-title-breadcrumb', first=True).text
+    if title is None:
+        print("Title not found, nothing downloaded, continuing.")
+        continue
     print(f'Downloading \"{title}\"...')
     # Get image index and download link
     slides = [(int(s.attrs['data-index']), s.find('img.slide_image', first=True).attrs['data-full']) for s in content.html.find('section.slide')]
