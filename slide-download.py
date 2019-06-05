@@ -4,6 +4,7 @@ import os
 from slugify import slugify
 import wget
 from urllib.parse import urljoin
+import shutil
 
 
 # If output directory does not exist, create it
@@ -25,7 +26,11 @@ nextSlideshows.add(START_URL)
 while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
     currentURL = nextSlideshows.pop()
     # Get contents of page
-    content = session.get(currentURL)
+    try:
+        content = session.get(currentURL)
+    except:
+        print("Presentation does not exist, nothing downloaded, continuing.")
+        continue
     # Get title
     title = content.html.find('span.j-title-breadcrumb', first=True).text
     print(f'Downloading \"{title}\"...')
@@ -46,7 +51,12 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
             for slide in slides:
                 filename = f'{slide[0]:0{nPad}d}' + '.jpg'
                 slidePath = os.path.join(currentDir, filename)
-                wget.download(slide[1], bar=None, out=slidePath)
+                try:
+                    wget.download(slide[1], bar=None, out=slidePath)
+                except:
+                    print("Failed download, deleting presentation folder.")
+                    shutil.rmtree(currentDir)
+                    continue
             print("Completed.")
             visitedSlideshows.add(currentURL)
             downloaded += 1
