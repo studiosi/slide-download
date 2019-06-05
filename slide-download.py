@@ -65,9 +65,9 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
                     failed = True
                     break
             if not failed:
-                print("Completed.")
-                visitedSlideshows.add(currentURL)
                 downloaded += 1
+                print(f"Completed ({downloaded}/{MAX_PER_SESSION}).")
+                visitedSlideshows.add(currentURL)
     else:
         print("No slides were found for this presentation")
     # Add current presentation to visited slideshows
