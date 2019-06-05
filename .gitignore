@@ -1,0 +1,4 @@
+config.py
+output/*
+.vscode/*
+__pycache__/*
