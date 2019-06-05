@@ -24,4 +24,4 @@ python slide-download.py
 
 # Be gentle
 
-You don't want to accidentally DOS Slideshare. Thake that in mind. Respect above all things.
+You don't want to accidentally DOS Slideshare. Take that in mind. Respect above all things.
