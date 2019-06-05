@@ -47,6 +47,7 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
     # Create output directory
     if nSlides > 0:
         currentDir = os.path.join(outputDir, slugify(title))
+        failed = False
         if os.path.exists(currentDir):
             print("Directory exists (probably already downloaded or with the same name than one that is), skipping.")
             pass # This will be a continue when the scraper is fully done
@@ -61,10 +62,12 @@ while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
                 except:
                     print("Failed download, deleting presentation folder.")
                     shutil.rmtree(currentDir)
-                    continue
-            print("Completed.")
-            visitedSlideshows.add(currentURL)
-            downloaded += 1
+                    failed = True
+                    break
+            if not failed:
+                print("Completed.")
+                visitedSlideshows.add(currentURL)
+                downloaded += 1
     else:
         print("No slides were found for this presentation")
     # Add current presentation to visited slideshows
