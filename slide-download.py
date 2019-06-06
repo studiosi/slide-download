@@ -23,7 +23,7 @@ nextSlideshows = set()
 
 nextSlideshows.add(START_URL)
 
-while downloaded <= MAX_PER_SESSION and len(nextSlideshows) > 0:
+while downloaded < MAX_PER_SESSION and len(nextSlideshows) > 0:
     currentURL = nextSlideshows.pop()
     # Get contents of page
     try:
